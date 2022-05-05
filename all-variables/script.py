@@ -14,8 +14,14 @@ response = requests.get(API_URL, params=API_ARGS)
 response = json.loads(response.content)
 
 allVariables = response['VARIABLES']
+variableNames = []
+for variableObj in allVariables:
+    variableNames += list(variableObj.keys())
 
 print(f"Total number of variables found: {len(allVariables)}")
 
 with open("variableInfo.json", "w") as outfile:
     outfile.write(json.dumps(allVariables))
+
+with open("variableNames.json", "w") as outfile:
+    outfile.write(json.dumps(variableNames))
