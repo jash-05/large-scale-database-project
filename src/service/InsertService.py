@@ -1,5 +1,4 @@
-from regex import P
-from model import Customer, WeatherStation
+from model import WeatherStation
 from db_config import session, mysql_db, cursor
 from tqdm import tqdm
 from mapper import getDataframe
@@ -100,10 +99,10 @@ class InsertService:
         bulk = []
 
         print("Creating data frames from csv")
-        for i in tqdm(range(2, 6)):
-            df = getDataframe(int(i))
-            bulk.append(df)
-
+        # for i in tqdm(range(2, 6)):
+        #     df = getDataframe(int(i))
+        #     bulk.append(df)
+        bulk.append(getDataframe(int(1)))
         for df_idx in range(len(bulk)):
 
             print(f"{df_idx} => Inserting df into SQL db")

@@ -1,5 +1,5 @@
 from db_config import mysql_db, cursor, session
-from model import Customer
+from model import WeatherStation
 from db_config import host, user, password, database, port
 import threading
 import time
@@ -11,24 +11,25 @@ from sqlalchemy.orm import sessionmaker
 def concurrent_burst_reads(
     query,
 ):
-    mysql_db = mysql.connect(host=host, user=user, password=password, database=database)
+    mysql_db = mysql.connect(host=host, user=user,
+                             password=password, database=database)
     cursor = mysql_db.cursor()
     cursor.execute(query)
     print(f"SQL res: {cursor.fetchone()}")
 
 
-def concurrent_burst_reads_orm(model=Customer):
+def concurrent_burst_reads_orm(model=WeatherStation):
     engine = create_engine(
         url=f"mysql+pymysql://{user}:{password}@{host}:{port}/{database}"
     )
     Session = sessionmaker(bind=engine)
     session = Session()
-    res = session.query(model).filter(Customer.id == 1)
-    print(f"ORM res: {res[0].name}")
+    res = session.query(model).limit(5)
+    print(f"ORM res: {res[0]}")
 
 
 def sql_worker():
-    query = "SELECT name FROM customer WHERE id=1"
+    query = "SELECT * FROM  weather_station_data LIMIT 5"
     concurrent_burst_reads(
         query,
     )
@@ -42,6 +43,7 @@ def sql_orm_worker():
     Simulating concurrent burst reads (many small reads)  
     execution flow begins below
 """
+
 
 sql_threads = []
 sql_orm_threads = []

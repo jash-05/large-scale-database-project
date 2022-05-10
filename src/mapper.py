@@ -2,7 +2,7 @@ def getDataframe(fileNumber):
 
     import pandas as pd
 
-    path = f"/Users/jaineilmandavia/my-edu/grad-school/sjsu/spring22/CMPE226/project/data/{fileNumber}.csv"
+    path = f"/Applications/projects/large-scale-database-project/fetch-station-data/data/{fileNumber}.csv"
 
     data = pd.read_csv(path)
 
