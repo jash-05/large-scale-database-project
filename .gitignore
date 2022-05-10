@@ -1,0 +1,4 @@
+fetch-station-data/data/*
+.DS_Store
+fetch-station-data/.DS_Store
+fetch-station-data/data.zip
